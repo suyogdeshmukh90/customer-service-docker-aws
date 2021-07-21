@@ -15,7 +15,9 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(name="name")
     private String name;
+    @Column(name="email")
     private String email;
 }
 

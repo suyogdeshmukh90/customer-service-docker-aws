@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/customers")
 public class CustomerController {
     private CustomerService customerService;
     private Environment environment;
@@ -19,33 +20,33 @@ public class CustomerController {
         this.customerService = customerService;
         this.environment = environment;
     }
-    @GetMapping
+    @GetMapping("/status")
     public ResponseEntity<String> getStatus()
     {
         return ResponseEntity.ok("up and running on port: "+environment.getProperty("local.server.port"));
     }
-    @GetMapping("/customers")
+    @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomer()
     {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
-    @PostMapping("/customers")
+    @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(customer));
     }
-    @GetMapping("/customers/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable ("id") Integer id)
     {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
-    @PutMapping("/customers/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable ("id") Integer id,@RequestBody Customer customer)
     {
         return ResponseEntity.ok(customerService.updateCustomer(id,customer));
     }
-    @DeleteMapping("/customers/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable ("id") Integer id)
     {
         return ResponseEntity.ok(customerService.DeleteCustomerById(id));
